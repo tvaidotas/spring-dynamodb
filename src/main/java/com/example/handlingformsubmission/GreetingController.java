@@ -18,6 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 @Controller
 public class GreetingController {
@@ -35,15 +37,22 @@ public class GreetingController {
         return "greeting";
     }
 
+    @GetMapping("/createTable")
+    public void createTable() {
+        String tableName = "Greeting";
+        String key = "GreetingID";
+        Region region = Region.US_EAST_1;
+        DynamoDbClient ddb = DynamoDbClient.builder()
+                .region(region)
+                .build();
+        TableCreation.createTable(ddb, tableName, key);
+        ddb.close();
+    }
+
     @PostMapping("/greeting")
     public String greetingSubmit(@ModelAttribute Greeting greeting) {
-
-        //Persist submitted data into a DynamoDB table using the Enhanced Client
         dde.injectDynamoItem(greeting);
-
-        // Send a mobile notification
         msg.sendMessage(greeting.getId());
-
         return "result";
     }
 
