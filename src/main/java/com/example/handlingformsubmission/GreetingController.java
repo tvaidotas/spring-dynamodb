@@ -40,8 +40,8 @@ public class GreetingController {
     @GetMapping("/createTable")
     public String createTable() {
         String tableName = "Greeting";
-        String key = "GreetingID";
-        Region region = Region.US_EAST_1;
+        String key = "id";
+        Region region = Region.EU_WEST_2;
         DynamoDbClient ddb = DynamoDbClient.builder()
                 .region(region)
                 .build();

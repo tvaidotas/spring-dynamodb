@@ -37,7 +37,7 @@ public class DynamoDBEnhanced {
     private final TableSchema<GreetingItems> TABLE_SCHEMA =
             StaticTableSchema.builder(GreetingItems.class)
                     .newItemSupplier(GreetingItems::new)
-                    .addAttribute(String.class, a -> a.name("idblog")
+                    .addAttribute(String.class, a -> a.name("id")
                             .getter(GreetingItems::getId)
                             .setter(GreetingItems::setId)
                             .tags(primaryPartitionKey()))
@@ -55,7 +55,7 @@ public class DynamoDBEnhanced {
     // Uses the Enhanced Client to inject a new post into a DynamoDB table
     public void injectDynamoItem(Greeting item){
 
-        Region region = Region.US_EAST_1;
+        Region region = Region.EU_WEST_2;
         DynamoDbClient ddb = DynamoDbClient.builder()
                 .region(region)
                 .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
