@@ -43,8 +43,8 @@ public class TableCreation {
         } catch (DynamoDbException e) {
             System.err.println(e.getMessage());
             System.exit(1);
+            return e.getMessage();
         }
-        return "";
     }
 
 }

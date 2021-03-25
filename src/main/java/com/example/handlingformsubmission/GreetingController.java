@@ -38,15 +38,16 @@ public class GreetingController {
     }
 
     @GetMapping("/createTable")
-    public void createTable() {
+    public String createTable() {
         String tableName = "Greeting";
         String key = "GreetingID";
         Region region = Region.US_EAST_1;
         DynamoDbClient ddb = DynamoDbClient.builder()
                 .region(region)
                 .build();
-        TableCreation.createTable(ddb, tableName, key);
+        String result = TableCreation.createTable(ddb, tableName, key);
         ddb.close();
+        return result;
     }
 
     @PostMapping("/greeting")
